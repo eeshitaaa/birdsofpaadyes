@@ -6,13 +6,14 @@
   const cardTemplate = document.getElementById("card-template");
   const count = document.getElementById("count");
   const search = document.getElementById("search");
-  const typeFilter = document.getElementById("type-filter");
-  const sort = document.getElementById("sort");
+  const chips = Array.from(document.querySelectorAll(".chip"));
   const empty = document.getElementById("empty");
   const refreshLoader = document.getElementById("refresh-loader");
   const loaderBottle = document.getElementById("loader-bottle");
 
   let products = [];
+  let activeChip = "all";
+
   const bottleImages = [
     "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Jars_Bleach_Listing_2024_6ab3a533-eba2-4cbd-9386-619d45834673.jpg?v=1768276802",
     "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Jars_Bleach_Listing_2024.jpg?v=1746695231",
@@ -21,6 +22,7 @@
     "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/6_28c32df8-7543-4111-9530-41e7c1705020.jpg?v=1746691993"
   ];
   const lastBottleKey = "paradyes-loader-last-index";
+
   const fallbackProducts = [
     {
       title: "Ruby Wine Semi-Permanent Hair Color",
@@ -52,25 +54,26 @@
   ];
 
   function setRandomBottle() {
-    if (!loaderBottle) return;
-    if (bottleImages.length === 0) return;
+    if (!loaderBottle || bottleImages.length === 0) return;
+
     let lastIndex = NaN;
     try {
       lastIndex = Number(localStorage.getItem(lastBottleKey));
     } catch (error) {
       lastIndex = NaN;
     }
-    let randomIndex = Math.floor(Math.random() * bottleImages.length);
 
+    let randomIndex = Math.floor(Math.random() * bottleImages.length);
     if (bottleImages.length > 1 && Number.isInteger(lastIndex) && randomIndex === lastIndex) {
       randomIndex = (randomIndex + 1) % bottleImages.length;
     }
 
     loaderBottle.src = bottleImages[randomIndex];
+
     try {
       localStorage.setItem(lastBottleKey, String(randomIndex));
     } catch (error) {
-      // Ignore storage failures and continue loading.
+      // Ignore storage errors.
     }
   }
 
@@ -89,36 +92,23 @@
     return `Rs. ${amount.toFixed(2)}`;
   }
 
-  function classifyType(title) {
-    const text = (title || "").toLowerCase();
-    if (text.includes("timeless")) return "timeless";
-    if (text.includes("glossy")) return "glossy";
-    return "other";
+  function matchesChip(product) {
+    const text = `${product.title} ${product.product_type}`.toLowerCase();
+    if (activeChip === "all") return true;
+    if (activeChip === "glossy") return text.includes("glossy");
+    if (activeChip === "timeless") return text.includes("timeless");
+    if (activeChip === "semi") return text.includes("semi") || text.includes("jar");
+    return true;
   }
 
   function getFilteredProducts() {
     const term = (search.value || "").trim().toLowerCase();
-    const type = typeFilter.value;
-    const sortValue = sort.value;
 
-    let items = products.filter((item) => {
-      const title = (item.title || "").toLowerCase();
-      const typeMatch = type === "all" || classifyType(item.title) === type;
+    return products.filter((item) => {
+      const title = normalizeTitle(item.title).toLowerCase();
       const searchMatch = !term || title.includes(term);
-      return typeMatch && searchMatch;
+      return searchMatch && matchesChip(item);
     });
-
-    if (sortValue === "title-asc") {
-      items = items.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortValue === "title-desc") {
-      items = items.sort((a, b) => b.title.localeCompare(a.title));
-    } else if (sortValue === "price-asc") {
-      items = items.sort((a, b) => Number(a.price) - Number(b.price));
-    } else if (sortValue === "price-desc") {
-      items = items.sort((a, b) => Number(b.price) - Number(a.price));
-    }
-
-    return items;
   }
 
   function renderProducts() {
@@ -130,7 +120,7 @@
     items.forEach((product) => {
       const node = cardTemplate.content.cloneNode(true);
 
-      const link = node.querySelector(".card-media-link");
+      const link = node.querySelector(".card-link");
       const image = node.querySelector(".card-image");
       const title = node.querySelector(".card-title");
       const type = node.querySelector(".card-type");
@@ -142,9 +132,9 @@
 
       link.href = productUrl;
       image.src = imageUrl;
-      image.alt = product.title;
+      image.alt = normalizeTitle(product.title);
       title.textContent = normalizeTitle(product.title);
-      type.textContent = product.product_type || "Semi-Permanent Hair Color";
+      type.textContent = product.product_type || "Hair Color";
       price.textContent = formatMoney(product.variants?.[0]?.price);
 
       const compareValue = Number(product.variants?.[0]?.compare_at_price || 0);
@@ -168,9 +158,7 @@
     try {
       const response = await Promise.race([
         fetch(ENDPOINT),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("Request timed out")), 7000)
-        )
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out")), 7000))
       ]);
       if (!response.ok) throw new Error("Failed to load products");
       const payload = await response.json();
@@ -179,29 +167,37 @@
         handle: item.handle,
         images: item.images,
         product_type: item.product_type,
-        price: item.variants?.[0]?.price,
         variants: item.variants || []
       }));
+
       if (products.length === 0) {
         products = fallbackProducts;
       }
+
       renderProducts();
-      setTimeout(hideLoader, 700);
+      setTimeout(hideLoader, 650);
     } catch (error) {
       products = fallbackProducts;
       renderProducts();
       count.textContent = `${products.length} products (fallback)`;
-      setTimeout(hideLoader, 700);
+      setTimeout(hideLoader, 650);
     }
   }
 
-  [search, typeFilter, sort].forEach((control) => {
-    control.addEventListener("input", renderProducts);
-    control.addEventListener("change", renderProducts);
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      chips.forEach((item) => item.classList.remove("is-on"));
+      chip.classList.add("is-on");
+      activeChip = chip.dataset.chip || "all";
+      renderProducts();
+    });
   });
 
+  if (search) {
+    search.addEventListener("input", renderProducts);
+  }
+
   setRandomBottle();
-  // Failsafe: never keep overlay forever if any runtime error happens.
   setTimeout(hideLoader, 3500);
   loadProducts();
 })();

@@ -1,133 +1,122 @@
 (() => {
-  const grid = document.getElementById("product-grid");
-  const cards = Array.from(grid ? grid.querySelectorAll(".card") : []);
+  const ENDPOINT =
+    "https://www.birdsofparadyes.com/collections/semi-permanent-hair-color/products.json?limit=250";
+
+  const grid = document.getElementById("grid");
+  const cardTemplate = document.getElementById("card-template");
+  const count = document.getElementById("count");
   const search = document.getElementById("search");
-  const hairBase = document.getElementById("hair-base");
-  const colorFamily = document.getElementById("color-family");
-  const chips = Array.from(document.querySelectorAll(".chip"));
-  const resetBtn = document.getElementById("reset");
-  const count = document.getElementById("result-count");
+  const typeFilter = document.getElementById("type-filter");
+  const sort = document.getElementById("sort");
   const empty = document.getElementById("empty");
-  const prepNote = document.getElementById("prep-note");
 
-  let activeChip = "all";
+  let products = [];
 
-  function matchesChip(card) {
-    const base = card.dataset.hairBase;
-    const bleach = card.dataset.bleach;
-    const fade = card.dataset.fade;
-
-    if (activeChip === "all") return true;
-    if (activeChip === "no-bleach") return bleach === "no";
-    if (activeChip === "dark-hair") return base === "dark";
-    if (activeChip === "warm-fade") return fade === "warm";
-    if (activeChip === "cool-fade") return fade === "cool";
-    return true;
+  function formatMoney(value) {
+    const amount = Number(value || 0);
+    return `Rs. ${amount.toFixed(2)}`;
   }
 
-  function updatePrepNote(visibleCards) {
-    if (!prepNote) return;
-
-    if (!visibleCards.length) {
-      prepNote.textContent = "No matching shades. Reset filters to see prep guidance.";
-      return;
-    }
-
-    const needBleach = visibleCards.some((card) => card.dataset.bleach === "yes");
-
-    if (needBleach) {
-      prepNote.textContent = "Some visible shades may need pre-lightening. Keep bleach in a separate prep block, not in the main color grid.";
-      return;
-    }
-
-    prepNote.textContent = "Great news: all currently visible shades are dark-hair friendly and no-bleach.";
+  function classifyType(title) {
+    const text = (title || "").toLowerCase();
+    if (text.includes("timeless")) return "timeless";
+    if (text.includes("glossy")) return "glossy";
+    return "other";
   }
 
-  function applyFilters() {
-    const term = (search ? search.value.trim().toLowerCase() : "") || "";
-    const baseValue = hairBase ? hairBase.value : "all";
-    const familyValue = colorFamily ? colorFamily.value : "all";
+  function getFilteredProducts() {
+    const term = (search.value || "").trim().toLowerCase();
+    const type = typeFilter.value;
+    const sortValue = sort.value;
 
-    let visible = 0;
-    const visibleCards = [];
+    let items = products.filter((item) => {
+      const title = (item.title || "").toLowerCase();
+      const typeMatch = type === "all" || classifyType(item.title) === type;
+      const searchMatch = !term || title.includes(term);
+      return typeMatch && searchMatch;
+    });
 
-    cards.forEach((card) => {
-      const name = (card.dataset.name || "").toLowerCase();
-      const base = card.dataset.hairBase;
-      const family = card.dataset.family;
+    if (sortValue === "title-asc") {
+      items = items.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortValue === "title-desc") {
+      items = items.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortValue === "price-asc") {
+      items = items.sort((a, b) => Number(a.price) - Number(b.price));
+    } else if (sortValue === "price-desc") {
+      items = items.sort((a, b) => Number(b.price) - Number(a.price));
+    }
 
-      const matchesSearch = !term || name.includes(term);
-      const matchesBase = baseValue === "all" || base === baseValue;
-      const matchesFamily = familyValue === "all" || family === familyValue;
-      const show = matchesSearch && matchesBase && matchesFamily && matchesChip(card);
+    return items;
+  }
 
-      card.classList.toggle("is-hidden", !show);
+  function renderProducts() {
+    const items = getFilteredProducts();
+    grid.innerHTML = "";
 
-      if (show) {
-        visible += 1;
-        visibleCards.push(card);
+    const fragment = document.createDocumentFragment();
+
+    items.forEach((product) => {
+      const node = cardTemplate.content.cloneNode(true);
+
+      const link = node.querySelector(".card-media-link");
+      const image = node.querySelector(".card-image");
+      const title = node.querySelector(".card-title");
+      const type = node.querySelector(".card-type");
+      const price = node.querySelector(".price");
+      const compare = node.querySelector(".compare-price");
+
+      const productUrl = `https://www.birdsofparadyes.com/products/${product.handle}`;
+      const imageUrl = product.images?.[0]?.src || "";
+
+      link.href = productUrl;
+      image.src = imageUrl;
+      image.alt = product.title;
+      title.textContent = product.title;
+      type.textContent = product.product_type || "Semi-Permanent Hair Color";
+      price.textContent = formatMoney(product.variants?.[0]?.price);
+
+      const compareValue = Number(product.variants?.[0]?.compare_at_price || 0);
+      const priceValue = Number(product.variants?.[0]?.price || 0);
+      if (compareValue > priceValue) {
+        compare.textContent = formatMoney(compareValue);
+        compare.classList.remove("is-hidden");
+      } else {
+        compare.classList.add("is-hidden");
       }
+
+      fragment.appendChild(node);
     });
 
-    if (count) {
-      count.textContent = `Showing ${visible} shade${visible === 1 ? "" : "s"}`;
-    }
-
-    if (empty) {
-      empty.classList.toggle("is-hidden", visible !== 0);
-    }
-
-    updatePrepNote(visibleCards);
+    grid.appendChild(fragment);
+    count.textContent = `${items.length} products`;
+    empty.classList.toggle("is-hidden", items.length !== 0);
   }
 
-  chips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      chips.forEach((item) => item.classList.remove("is-on"));
-      chip.classList.add("is-on");
-      activeChip = chip.dataset.chip || "all";
-      applyFilters();
-    });
+  async function loadProducts() {
+    try {
+      const response = await fetch(ENDPOINT);
+      if (!response.ok) throw new Error("Failed to load products");
+      const payload = await response.json();
+      products = (payload.products || []).map((item) => ({
+        title: item.title,
+        handle: item.handle,
+        images: item.images,
+        product_type: item.product_type,
+        price: item.variants?.[0]?.price,
+        variants: item.variants || []
+      }));
+      renderProducts();
+    } catch (error) {
+      count.textContent = "Unable to load products right now";
+      empty.textContent = "Please refresh in a moment.";
+      empty.classList.remove("is-hidden");
+    }
+  }
+
+  [search, typeFilter, sort].forEach((control) => {
+    control.addEventListener("input", renderProducts);
+    control.addEventListener("change", renderProducts);
   });
 
-  if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-      if (search) search.value = "";
-      if (hairBase) hairBase.value = "all";
-      if (colorFamily) colorFamily.value = "all";
-
-      activeChip = "all";
-      chips.forEach((item) => {
-        item.classList.toggle("is-on", item.dataset.chip === "all");
-      });
-
-      applyFilters();
-    });
-  }
-
-  [search, hairBase, colorFamily].forEach((control) => {
-    if (!control) return;
-    control.addEventListener("input", applyFilters);
-    control.addEventListener("change", applyFilters);
-  });
-
-  const revealItems = Array.from(document.querySelectorAll(".reveal"));
-  if ("IntersectionObserver" in window && revealItems.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    revealItems.forEach((item) => observer.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-  }
-
-  applyFilters();
+  loadProducts();
 })();

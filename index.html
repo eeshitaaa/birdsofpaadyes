@@ -3,223 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birds of Paradyes | Semi-Permanent Hair Color</title>
+    <title>Hair Color for Indian Hair | Paradyes</title>
     <meta
       name="description"
-      content="Shop semi-permanent hair tints with cleaner filters, real product visuals, and prep guidance in one premium landing page."
+      content="Explore high-pigment semi-permanent shades that fade beautifully. Vegan, gentle, and made for Indian hair."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="site-header" id="top">
-      <p class="notice">Free shipping across India | COD available</p>
-      <div class="container nav-wrap">
-        <a href="#top" class="brand">Birds of Paradyes</a>
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a href="#shop">Shop shades</a>
-          <a href="#why">Why this page</a>
-          <a href="#prep">Prep guide</a>
-        </nav>
-        <a href="#shop" class="btn btn-sm">Find my shade</a>
+    <div class="announcement">Free Shipping across India on prepaid orders</div>
+
+    <header class="site-header">
+      <div class="container header-row">
+        <button class="icon-btn" aria-label="Menu">☰</button>
+        <a class="logo" href="#" aria-label="Birds of Paradyes home">
+          <img
+            src="https://www.birdsofparadyes.com/cdn/shop/files/Logo2_1.png?v=1726819659&width=220"
+            alt="Birds of Paradyes"
+          />
+        </a>
+        <button class="icon-btn" aria-label="Cart">🛒</button>
       </div>
+      <nav class="container nav-links" aria-label="Main navigation">
+        <a href="#">Semi-Permanent</a>
+        <a href="#">Hair Tint</a>
+        <a href="#">Bleach</a>
+        <a href="#">Shampoo</a>
+      </nav>
     </header>
 
     <main>
-      <section class="hero section">
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Semi-Permanent Hair Color</p>
-            <h1>Real shade visuals. Cleaner shopping flow.</h1>
-            <p class="lead">
-              We removed clutter, separated prep products from color jars, and added
-              intent-first filters so shoppers can pick the right tint faster.
-            </p>
-            <div class="hero-cta">
-              <a class="btn" href="#shop">Shop collection</a>
-              <a class="btn btn-ghost" href="#why">See improvements</a>
-            </div>
-          </div>
-
-          <div class="hero-media reveal" aria-hidden="true">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/RR_Baddie.jpg?v=1772432523"
-              alt=""
-            />
-            <img
-              src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/BP_Baddie.jpg?v=1772432542"
-              alt=""
-            />
-            <img
-              src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/EB_Baddie.jpg?v=1772432505"
-              alt=""
-            />
-          </div>
+      <section class="collection-hero">
+        <img
+          src="https://www.birdsofparadyes.com/cdn/shop/files/5_23ed05c5-19cb-4845-9cae-894c086fa641.jpg?v=1750140048&width=1600"
+          alt="Semi Permanent Hair Color"
+        />
+        <div class="hero-overlay">
+          <p class="eyebrow">Collection</p>
+          <h1>Semi-Permanent Hair Color</h1>
+          <p>Bold shades designed for Indian hair and beautiful fade-outs.</p>
         </div>
       </section>
 
-      <section class="section why" id="why">
-        <div class="container">
-          <p class="eyebrow">What changed</p>
-          <h2 class="section-title reveal">The collection is now easier to trust and browse</h2>
-          <div class="why-grid">
-            <article class="why-card reveal">
-              <h3>Clear product intent</h3>
-              <p>Bleach and developers are no longer mixed inside the color grid.</p>
-            </article>
-            <article class="why-card reveal">
-              <h3>Consistent naming</h3>
-              <p>Category and shade labels are unified to avoid taxonomy confusion.</p>
-            </article>
-            <article class="why-card reveal">
-              <h3>Decision-first filters</h3>
-              <p>Filter by dark hair support, fade tone, family, and bleach requirement.</p>
-            </article>
+      <section class="collection-content container">
+        <div class="toolbar">
+          <p id="count">Loading shades...</p>
+          <div class="controls">
+            <input id="search" type="search" placeholder="Search shades" aria-label="Search shades" />
+            <select id="type-filter" aria-label="Type filter">
+              <option value="all">All types</option>
+              <option value="glossy">Glossy Hair Tint</option>
+              <option value="timeless">Timeless Hair Tint</option>
+            </select>
+            <select id="sort" aria-label="Sort">
+              <option value="featured">Featured</option>
+              <option value="title-asc">Alphabetical, A-Z</option>
+              <option value="title-desc">Alphabetical, Z-A</option>
+              <option value="price-asc">Price, low to high</option>
+              <option value="price-desc">Price, high to low</option>
+            </select>
           </div>
         </div>
-      </section>
 
-      <section class="section shop" id="shop">
-        <div class="container">
-          <div class="shop-head reveal">
-            <p class="eyebrow">Shade finder</p>
-            <h2>Pick by outcome, then pick by color</h2>
-            <p class="subtitle">Use quick chips first, then refine with search and family.</p>
-          </div>
-
-          <div class="filter-panel reveal">
-            <div class="filter-row">
-              <input id="search" type="search" placeholder="Search shade name..." aria-label="Search" />
-              <select id="hair-base" aria-label="Hair base filter">
-                <option value="all">Hair base: All</option>
-                <option value="dark">Works on dark hair</option>
-                <option value="light">Best on pre-lightened hair</option>
-              </select>
-              <select id="color-family" aria-label="Color family filter">
-                <option value="all">Color family: All</option>
-                <option value="red">Red/Wine</option>
-                <option value="brown">Brown</option>
-                <option value="plum">Plum/Purple</option>
-              </select>
-              <button class="btn btn-ghost" id="reset" type="button">Reset</button>
-            </div>
-
-            <div class="chips" role="group" aria-label="Quick filters">
-              <button type="button" class="chip is-on" data-chip="all">All shades</button>
-              <button type="button" class="chip" data-chip="no-bleach">No bleach needed</button>
-              <button type="button" class="chip" data-chip="dark-hair">Dark hair friendly</button>
-              <button type="button" class="chip" data-chip="warm-fade">Warm fade</button>
-              <button type="button" class="chip" data-chip="cool-fade">Cool fade</button>
-            </div>
-
-            <p class="result-count" id="result-count">Showing 9 shades</p>
-          </div>
-
-          <div class="product-grid" id="product-grid">
-            <article class="card reveal" data-name="Ruby Rush Glossy Hair Tint" data-hair-base="dark" data-family="red" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/RR_Baddie.jpg?v=1772432523" alt="Ruby Rush Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">No bleach</span></div>
-              <h3>Ruby Rush Glossy Hair Tint</h3>
-              <p class="meta">Deep ruby tone with warm fade</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Cherry Coke Glossy Hair Tint" data-hair-base="dark" data-family="red" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/CC_Baddie_84bb5475-7e2d-4913-b7d3-35908c5843fc.jpg?v=1772432412" alt="Cherry Coke Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">Warm fade</span></div>
-              <h3>Cherry Coke Glossy Hair Tint</h3>
-              <p class="meta">Cola-red finish for brunette bases</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Velvet Burgundy Glossy Hair Tint" data-hair-base="dark" data-family="red" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/VB_Baddie.jpg?v=1772432436" alt="Velvet Burgundy Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">No bleach</span></div>
-              <h3>Velvet Burgundy Glossy Hair Tint</h3>
-              <p class="meta">Rich burgundy wash with gloss</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Berry Plum Glossy Hair Tint" data-hair-base="dark" data-family="plum" data-bleach="no" data-fade="cool">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/BP_Baddie.jpg?v=1772432542" alt="Berry Plum Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">Cool fade</span></div>
-              <h3>Berry Plum Glossy Hair Tint</h3>
-              <p class="meta">Muted plum tone for cooler undertones</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Espresso Brown Glossy Hair Tint" data-hair-base="dark" data-family="brown" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/EB_Baddie.jpg?v=1772432505" alt="Espresso Brown Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">No bleach</span></div>
-              <h3>Espresso Brown Glossy Hair Tint</h3>
-              <p class="meta">Deep espresso refresh with shine</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Hazel Brown Glossy Hair Tint" data-hair-base="dark" data-family="brown" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/HB_Baddie.jpg?v=1772432128" alt="Hazel Brown Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">Warm fade</span></div>
-              <h3>Hazel Brown Glossy Hair Tint</h3>
-              <p class="meta">Soft hazel warmth for natural brunettes</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Lover's Latte Glossy Hair Tint" data-hair-base="dark" data-family="brown" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/LL_Baddie.jpg?v=1772432329" alt="Lover's Latte Glossy Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">No bleach</span></div>
-              <h3>Lover's Latte Glossy Hair Tint</h3>
-              <p class="meta">Neutral latte brown for subtle makeover</p>
-              <p class="price">₹548</p>
-            </article>
-
-            <article class="card reveal" data-name="Dark Brown Timeless Hair Tint" data-hair-base="dark" data-family="brown" data-bleach="no" data-fade="cool">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/1B.TimelessDarkBrown.jpg?v=1766299578" alt="Dark Brown Timeless Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">Cool fade</span></div>
-              <h3>Dark Brown Timeless Hair Tint</h3>
-              <p class="meta">Classic dark brown with deeper depth</p>
-              <p class="price">₹549</p>
-            </article>
-
-            <article class="card reveal" data-name="Natural Brown Timeless Hair Tint" data-hair-base="dark" data-family="brown" data-bleach="no" data-fade="warm">
-              <img src="https://cdn.shopify.com/s/files/1/0533/6006/6741/files/1B.TimelessNaturalBrown_0a7ae6f0-951a-44b2-858a-e2736707f31d.jpg?v=1766299033" alt="Natural Brown Timeless Hair Tint" loading="lazy" />
-              <div class="pill-row"><span class="pill">Dark hair</span><span class="pill">No bleach</span></div>
-              <h3>Natural Brown Timeless Hair Tint</h3>
-              <p class="meta">Balanced natural brown everyday tint</p>
-              <p class="price">₹549</p>
-            </article>
-          </div>
-          <p class="empty is-hidden" id="empty">No shades match. Try resetting filters.</p>
+        <div class="prep-note">
+          <strong>Prep Products:</strong> Bleach/developer are shown in a separate prep journey,
+          not mixed into the shade grid.
         </div>
-      </section>
 
-      <section class="section prep" id="prep">
-        <div class="container prep-grid reveal">
-          <div>
-            <p class="eyebrow">Prep section</p>
-            <h2>Prep products are separate on purpose</h2>
-            <p>
-              Bleach/developer should appear as contextual recommendations, not mixed
-              with shade cards. This keeps browsing clean and reduces wrong-product adds.
-            </p>
-          </div>
-          <aside class="prep-note" id="prep-note">
-            Great news: all currently visible shades are dark-hair friendly and no-bleach.
-          </aside>
-        </div>
+        <div id="grid" class="product-grid"></div>
+        <p id="empty" class="empty is-hidden">No matching shades.</p>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-wrap">
-        <p>Prototype landing page redesign for Birds of Paradyes</p>
-        <a href="#top">Back to top</a>
-      </div>
-    </footer>
+    <template id="card-template">
+      <article class="card">
+        <a class="card-media-link" target="_blank" rel="noopener noreferrer">
+          <img class="card-image" alt="" loading="lazy" />
+        </a>
+        <div class="card-body">
+          <h2 class="card-title"></h2>
+          <p class="card-type"></p>
+          <p class="price-row">
+            <span class="price"></span>
+            <span class="compare-price is-hidden"></span>
+          </p>
+        </div>
+      </article>
+    </template>
 
     <script src="./script.js"></script>
   </body>

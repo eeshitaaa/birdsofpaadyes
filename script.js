@@ -5,7 +5,6 @@
   const cardTemplate = document.getElementById("card-template");
   const count = document.getElementById("count");
   const search = document.getElementById("search");
-  const chips = Array.from(document.querySelectorAll(".chip"));
   const navFilters = Array.from(document.querySelectorAll(".nav-filter"));
   const empty = document.getElementById("empty");
   const loadMoreBtn = document.getElementById("load-more");
@@ -63,30 +62,27 @@
     return `Rs. ${amount.toFixed(2)}`;
   }
 
-  function matchesChip(product) {
-    if (activeChip === "all") return true;
-    const type = (product.product_type || "").toLowerCase();
-    return type === activeChip.toLowerCase();
-  }
-
   function getFilteredProducts() {
-    const term = (search.value || "").trim().toLowerCase();
+    const term = (search?.value || "").trim().toLowerCase();
 
     return products.filter((product) => {
       const title = (product.title || "").toLowerCase();
+      const type = (product.product_type || "").toLowerCase();
+      const typeMatch = activeChip === "all" || type === activeChip.toLowerCase();
       const searchMatch = !term || title.includes(term);
-      return searchMatch && matchesChip(product);
+      return typeMatch && searchMatch;
     });
   }
 
   function renderProducts() {
     const allItems = getFilteredProducts();
-    const items = allItems.slice(0, visibleCount);
+    const visibleItems = allItems.slice(0, visibleCount);
+
     grid.innerHTML = "";
 
     const fragment = document.createDocumentFragment();
 
-    items.forEach((product) => {
+    visibleItems.forEach((product) => {
       const node = cardTemplate.content.cloneNode(true);
 
       const link = node.querySelector(".card-link");
@@ -104,10 +100,10 @@
       link.href = productUrl;
       image.src = imageUrl;
       image.alt = product.title;
-      cardCta.href = productUrl;
       title.textContent = product.title;
       type.textContent = product.product_type || "Boroline Product";
       price.textContent = formatMoney(primaryVariant.price);
+      cardCta.href = productUrl;
 
       const compareValue = Number(primaryVariant.compare_at_price || 0);
       const priceValue = Number(primaryVariant.price || 0);
@@ -122,13 +118,12 @@
     });
 
     grid.appendChild(fragment);
-    count.textContent = `${items.length} of ${allItems.length} products`;
+
+    count.textContent = `${visibleItems.length} of ${allItems.length} products`;
     empty.classList.toggle("is-hidden", allItems.length !== 0);
 
-    if (loadMoreBtn) {
-      const shouldShow = allItems.length > visibleCount;
-      loadMoreBtn.classList.toggle("is-hidden", !shouldShow);
-    }
+    const shouldShowMore = allItems.length > visibleCount;
+    loadMoreBtn.classList.toggle("is-hidden", !shouldShowMore);
   }
 
   async function loadProducts() {
@@ -137,62 +132,45 @@
         fetch(ENDPOINT),
         new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out")), 7000))
       ]);
+
       if (!response.ok) throw new Error("Fetch failed");
 
       const payload = await response.json();
       products = payload.products || [];
 
-      if (!products.length) {
-        products = fallbackProducts;
-      }
+      if (!products.length) products = fallbackProducts;
 
       renderProducts();
-      setTimeout(hideLoader, 600);
+      setTimeout(hideLoader, 550);
     } catch (error) {
       products = fallbackProducts;
       renderProducts();
       count.textContent = `${products.length} products (fallback)`;
-      setTimeout(hideLoader, 600);
+      setTimeout(hideLoader, 550);
     }
   }
-
-  chips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      chips.forEach((item) => item.classList.remove("is-on"));
-      chip.classList.add("is-on");
-      activeChip = chip.dataset.chip || "all";
-      navFilters.forEach((item) => item.classList.toggle("is-on", (item.dataset.chip || "all") === activeChip));
-      visibleCount = pageSize;
-      renderProducts();
-    });
-  });
 
   navFilters.forEach((btn) => {
     btn.addEventListener("click", () => {
       activeChip = btn.dataset.chip || "all";
       navFilters.forEach((item) => item.classList.toggle("is-on", item === btn));
-      chips.forEach((chip) => chip.classList.toggle("is-on", (chip.dataset.chip || "all") === activeChip));
       visibleCount = pageSize;
       document.getElementById("shop")?.scrollIntoView({ behavior: "smooth", block: "start" });
       renderProducts();
     });
   });
 
-  if (search) {
-    search.addEventListener("input", () => {
-      visibleCount = pageSize;
-      renderProducts();
-    });
-  }
+  search?.addEventListener("input", () => {
+    visibleCount = pageSize;
+    renderProducts();
+  });
 
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener("click", () => {
-      visibleCount += pageSize;
-      renderProducts();
-    });
-  }
+  loadMoreBtn?.addEventListener("click", () => {
+    visibleCount += pageSize;
+    renderProducts();
+  });
 
   setLoaderImage();
-  setTimeout(hideLoader, 3500);
+  setTimeout(hideLoader, 3200);
   loadProducts();
 })();

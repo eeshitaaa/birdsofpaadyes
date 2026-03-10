@@ -20,8 +20,8 @@
     if (activeChip === "all") return true;
     if (activeChip === "no-bleach") return bleach === "no";
     if (activeChip === "dark-hair") return base === "dark";
-    if (activeChip === "cool-fade") return fade === "cool";
     if (activeChip === "warm-fade") return fade === "warm";
+    if (activeChip === "cool-fade") return fade === "cool";
     return true;
   }
 
@@ -29,21 +29,18 @@
     if (!prepNote) return;
 
     if (!visibleCards.length) {
-      prepNote.textContent = "No matching shades right now. Reset filters to view prep guidance.";
+      prepNote.textContent = "No matching shades. Reset filters to see prep guidance.";
       return;
     }
 
     const needBleach = visibleCards.some((card) => card.dataset.bleach === "yes");
-    const allNoBleach = visibleCards.every((card) => card.dataset.bleach === "no");
 
-    if (allNoBleach) {
-      prepNote.textContent = "Great news: all visible shades can be used without bleach.";
+    if (needBleach) {
+      prepNote.textContent = "Some visible shades may need pre-lightening. Keep bleach in a separate prep block, not in the main color grid.";
       return;
     }
 
-    if (needBleach) {
-      prepNote.textContent = "Current results include shades that may need pre-lightening. Show bleach only as a separate recommendation.";
-    }
+    prepNote.textContent = "Great news: all currently visible shades are dark-hair friendly and no-bleach.";
   }
 
   function applyFilters() {

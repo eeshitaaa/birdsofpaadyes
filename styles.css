@@ -130,10 +130,20 @@ img {
 }
 
 .icon-btn {
-  border: 0;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 0.7rem;
+  border: 1px solid #d9cbb9;
+  border-radius: 999px;
+  background: #fff8ee;
   color: #4f4439;
-  font-size: 1.35rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -212,6 +222,30 @@ img {
 
 .btn:hover {
   background: rgba(62, 97, 65, 0.92);
+}
+
+.btn-row {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.btn-row .btn {
+  margin-top: 0;
+}
+
+.btn-ghost {
+  border-color: rgba(251, 244, 232, 0.66);
+  background: rgba(251, 244, 232, 0.2);
+  color: #fffef8;
+}
+
+.load-more {
+  margin: 1rem auto 0;
+  border-color: #c8b8a5;
+  background: #f8eee0;
+  color: #433729;
 }
 
 .hero-metrics {
@@ -302,7 +336,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.9rem;
+  gap: 1rem;
 }
 
 .chips {
@@ -332,7 +366,8 @@ img {
 
 .shop-toolbar input {
   min-height: 48px;
-  min-width: 300px;
+  min-width: 260px;
+  max-width: 340px;
   border: 1px solid #d4c4af;
   background: #fffdf9;
   border-radius: 999px;
@@ -350,8 +385,8 @@ img {
 .product-grid {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
 }
 
 .card {
@@ -511,6 +546,7 @@ img {
 
   .shop-toolbar input {
     min-width: 100%;
+    max-width: none;
     width: 100%;
   }
 

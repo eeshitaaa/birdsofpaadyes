@@ -34,14 +34,28 @@
 
     <header class="site-header">
       <div class="container header-row">
-        <button class="icon-btn" aria-label="Open menu">☰</button>
+        <a
+          class="icon-btn"
+          href="https://shop.boroline.com/collections/all"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open collection"
+          >Shop</a
+        >
         <a class="logo" href="#" aria-label="Boroline home">
           <img
             src="https://shop.boroline.com/cdn/shop/files/Boroline_Registered_Trademark_Logo.png?v=1752044187&width=440"
             alt="Boroline"
           />
         </a>
-        <button class="icon-btn" aria-label="Open cart">🛒</button>
+        <a
+          class="icon-btn"
+          href="https://shop.boroline.com/cart"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open cart"
+          >Cart</a
+        >
       </div>
     </header>
 
@@ -58,7 +72,16 @@
             Explore trusted Boroline classics and everyday essentials for
             moisturising, soothing, and hygiene care routines.
           </p>
-          <a class="btn" href="#shop">Shop all products</a>
+          <div class="btn-row">
+            <a class="btn" href="#shop">Shop essentials</a>
+            <a
+              class="btn btn-ghost"
+              href="https://shop.boroline.com/collections/all"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Visit official store</a
+            >
+          </div>
           <div class="hero-metrics">
             <span>95+ years trust</span>
             <span>Dermato-safe daily care</span>
@@ -104,9 +127,8 @@
               <button class="chip is-on" data-chip="all" type="button">All</button>
               <button class="chip" data-chip="Cream" type="button">Cream</button>
               <button class="chip" data-chip="Lip Balm" type="button">Lip Balm</button>
-              <button class="chip" data-chip="Soap" type="button">Soap</button>
               <button class="chip" data-chip="Liquid" type="button">Liquid</button>
-              <button class="chip" data-chip="Combo" type="button">Combo</button>
+              <button class="chip" data-chip="Soap" type="button">Soap</button>
             </div>
             <input id="search" type="search" placeholder="Search products" aria-label="Search products" />
           </div>
@@ -114,6 +136,7 @@
           <p id="count" class="count">Loading products...</p>
           <div id="grid" class="product-grid"></div>
           <p id="empty" class="empty is-hidden">No products found.</p>
+          <button id="load-more" class="btn btn-ghost load-more is-hidden" type="button">Load more products</button>
         </div>
       </section>
 

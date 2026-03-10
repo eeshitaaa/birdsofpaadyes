@@ -7,11 +7,14 @@
   const search = document.getElementById("search");
   const chips = Array.from(document.querySelectorAll(".chip"));
   const empty = document.getElementById("empty");
+  const loadMoreBtn = document.getElementById("load-more");
   const refreshLoader = document.getElementById("refresh-loader");
   const loaderProduct = document.getElementById("loader-product");
 
   let products = [];
   let activeChip = "all";
+  const pageSize = 8;
+  let visibleCount = pageSize;
 
   const fallbackProducts = [
     {
@@ -76,7 +79,8 @@
   }
 
   function renderProducts() {
-    const items = getFilteredProducts();
+    const allItems = getFilteredProducts();
+    const items = allItems.slice(0, visibleCount);
     grid.innerHTML = "";
 
     const fragment = document.createDocumentFragment();
@@ -115,8 +119,13 @@
     });
 
     grid.appendChild(fragment);
-    count.textContent = `${items.length} products`;
-    empty.classList.toggle("is-hidden", items.length !== 0);
+    count.textContent = `${items.length} of ${allItems.length} products`;
+    empty.classList.toggle("is-hidden", allItems.length !== 0);
+
+    if (loadMoreBtn) {
+      const shouldShow = allItems.length > visibleCount;
+      loadMoreBtn.classList.toggle("is-hidden", !shouldShow);
+    }
   }
 
   async function loadProducts() {
@@ -149,12 +158,23 @@
       chips.forEach((item) => item.classList.remove("is-on"));
       chip.classList.add("is-on");
       activeChip = chip.dataset.chip || "all";
+      visibleCount = pageSize;
       renderProducts();
     });
   });
 
   if (search) {
-    search.addEventListener("input", renderProducts);
+    search.addEventListener("input", () => {
+      visibleCount = pageSize;
+      renderProducts();
+    });
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      visibleCount += pageSize;
+      renderProducts();
+    });
   }
 
   setLoaderImage();

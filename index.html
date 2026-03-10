@@ -3,166 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Birds of Paradyes | Semi-Permanent Hair Color</title>
+    <title>Birds of Paradyes | Semi-Permanent Color Collection</title>
     <meta
       name="description"
-      content="A conversion-focused landing page for semi-permanent hair color with clean taxonomy, smart filters, and clearer prep guidance."
+      content="A cleaner and conversion-focused semi-permanent hair color collection experience with clearer filtering and product intent."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="noise" aria-hidden="true"></div>
+    <div class="bg-shape bg-one" aria-hidden="true"></div>
+    <div class="bg-shape bg-two" aria-hidden="true"></div>
 
-    <header class="site-header" id="top">
-      <div class="container nav-wrap">
+    <header class="site-header">
+      <div class="container nav">
         <a href="#top" class="brand">Birds of Paradyes</a>
-        <nav aria-label="Primary navigation" class="nav-links">
-          <a href="#why">Why this works</a>
-          <a href="#finder">Shade finder</a>
-          <a href="#prep">Prep</a>
-          <a href="#faq">FAQ</a>
+        <nav aria-label="Primary navigation">
+          <a href="#colors">Colors</a>
+          <a href="#filters">Filters</a>
+          <a href="#prep">Prep Guide</a>
         </nav>
-        <a class="btn btn-sm" href="#finder">Shop shades</a>
       </div>
     </header>
 
-    <main>
-      <section class="hero section">
+    <main id="top">
+      <section class="hero">
         <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Semi-Permanent Color Collection</p>
-            <h1>Find your next hair color in under 30 seconds</h1>
+          <div>
+            <p class="eyebrow">Collection Redesign</p>
+            <h1>Semi-Permanent Hair Color, without the clutter</h1>
             <p class="lead">
-              We cleaned up the collection so it is easier to shop: only color jars
-              in the main grid, intent-based filters, and prep products separated
-              into a dedicated recommendation block.
+              This version fixes taxonomy confusion, separates prep products, and
+              helps shoppers find the right shade by hair base and outcome.
             </p>
-            <div class="hero-cta">
-              <a class="btn" href="#finder">Find my shade</a>
-              <a class="btn btn-ghost" href="#why">See what changed</a>
-            </div>
+            <a class="btn" href="#filters">Start with filters</a>
           </div>
-
-          <aside class="hero-panel reveal" aria-label="Collection improvements">
+          <aside class="hero-note">
             <h2>What changed</h2>
             <ul>
-              <li>Removed non-color products from the color collection grid</li>
-              <li>Standardized naming and category language</li>
-              <li>Added filters by hair base, fade tone, and color family</li>
-              <li>Prep/bleach now appears separately and contextually</li>
+              <li>Only color jars in the collection grid</li>
+              <li>Bleach moved to a prep recommendation block</li>
+              <li>Intent-first filters: no bleach, dark hair, fade tone</li>
             </ul>
           </aside>
         </div>
       </section>
 
-      <section class="proof-strip">
-        <div class="container proof-grid reveal">
-          <article>
-            <strong>8</strong>
-            <span>Curated color jars</span>
-          </article>
-          <article>
-            <strong>5</strong>
-            <span>Intent-first quick filters</span>
-          </article>
-          <article>
-            <strong>1</strong>
-            <span>Clear prep path for bleach products</span>
-          </article>
+      <section class="filters" id="filters">
+        <div class="container">
+          <div class="filter-head">
+            <h2>Find your shade faster</h2>
+            <p>Filter by what matters during purchase decisions.</p>
+          </div>
+
+          <div class="filter-row">
+            <input
+              id="search"
+              type="search"
+              placeholder="Search by shade name..."
+              aria-label="Search color shades"
+            />
+
+            <select id="hair-base" aria-label="Hair base filter">
+              <option value="all">Hair base: All</option>
+              <option value="dark">Works on dark hair</option>
+              <option value="light">Best on pre-lightened hair</option>
+            </select>
+
+            <select id="color-family" aria-label="Color family filter">
+              <option value="all">Color family: All</option>
+              <option value="pink">Pink</option>
+              <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
+              <option value="red">Red</option>
+              <option value="brown">Brown</option>
+              <option value="green">Green</option>
+            </select>
+
+            <button class="btn btn-ghost" id="reset">Reset</button>
+          </div>
+
+          <div class="chips" role="group" aria-label="Quick filters">
+            <button type="button" class="chip is-on" data-chip="all">All jars</button>
+            <button type="button" class="chip" data-chip="no-bleach">No bleach needed</button>
+            <button type="button" class="chip" data-chip="dark-hair">Dark hair friendly</button>
+            <button type="button" class="chip" data-chip="cool-fade">Cool fade</button>
+            <button type="button" class="chip" data-chip="warm-fade">Warm fade</button>
+          </div>
+          <p class="result-count" id="result-count">Showing 8 shades</p>
         </div>
       </section>
 
-      <section class="section" id="why">
+      <section class="products" id="colors">
         <div class="container">
-          <p class="eyebrow">Design fixes</p>
-          <h2 class="section-title reveal">What was wrong and how this page fixes it</h2>
-          <div class="issue-grid">
-            <article class="issue-card reveal">
-              <h3>Mixed product intent</h3>
-              <p>
-                Bleach packs were mixed with color jars. Users had to mentally
-                separate prep from color choice.
-              </p>
-              <p class="tag">Fix: Prep moved to dedicated section</p>
-            </article>
-            <article class="issue-card reveal">
-              <h3>Messy taxonomy</h3>
-              <p>
-                Category names were inconsistent and repetitive, reducing trust and
-                making collection browsing harder.
-              </p>
-              <p class="tag">Fix: Clean, consistent collection language</p>
-            </article>
-            <article class="issue-card reveal">
-              <h3>Weak product differentiation</h3>
-              <p>
-                Users could not quickly see if a shade works on dark hair, needs
-                bleach, or fades warm/cool.
-              </p>
-              <p class="tag">Fix: Outcome metadata and quick filters</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section finder" id="finder">
-        <div class="container">
-          <div class="finder-head reveal">
-            <p class="eyebrow">Shade finder</p>
-            <h2>Shop by real decision factors</h2>
-            <p class="subtitle">
-              Start with hair base and fade preference, then narrow by color family.
-            </p>
-          </div>
-
-          <div class="filter-panel reveal">
-            <div class="filter-row">
-              <input
-                id="search"
-                type="search"
-                placeholder="Search shades..."
-                aria-label="Search color shades"
-              />
-
-              <select id="hair-base" aria-label="Hair base filter">
-                <option value="all">Hair base: All</option>
-                <option value="dark">Works on dark hair</option>
-                <option value="light">Best on pre-lightened hair</option>
-              </select>
-
-              <select id="color-family" aria-label="Color family filter">
-                <option value="all">Color family: All</option>
-                <option value="pink">Pink</option>
-                <option value="blue">Blue</option>
-                <option value="purple">Purple</option>
-                <option value="red">Red</option>
-                <option value="brown">Brown</option>
-                <option value="green">Green</option>
-              </select>
-
-              <button id="reset" class="btn btn-ghost" type="button">Reset</button>
-            </div>
-
-            <div class="chips" role="group" aria-label="Quick filters">
-              <button type="button" class="chip is-on" data-chip="all">All jars</button>
-              <button type="button" class="chip" data-chip="no-bleach">No bleach needed</button>
-              <button type="button" class="chip" data-chip="dark-hair">Dark hair friendly</button>
-              <button type="button" class="chip" data-chip="cool-fade">Cool fade</button>
-              <button type="button" class="chip" data-chip="warm-fade">Warm fade</button>
-            </div>
-
-            <p class="result-count" id="result-count">Showing 8 shades</p>
-          </div>
-
-          <div class="product-grid" id="product-grid">
+          <div class="grid" id="product-grid">
             <article
-              class="card reveal"
+              class="card"
               data-name="Ruby Rush"
               data-hair-base="dark"
               data-family="red"
@@ -170,17 +111,13 @@
               data-fade="warm"
             >
               <span class="swatch swatch-ruby"></span>
-              <div class="pill-row">
-                <span class="pill">Dark hair</span>
-                <span class="pill">No bleach</span>
-              </div>
               <h3>Ruby Rush</h3>
-              <p class="meta">Deep ruby red with warm fade · 8-10 washes</p>
+              <p class="meta">Deep red · Visible on dark hair · 8-10 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Cosmic Blue"
               data-hair-base="light"
               data-family="blue"
@@ -188,17 +125,13 @@
               data-fade="cool"
             >
               <span class="swatch swatch-blue"></span>
-              <div class="pill-row">
-                <span class="pill">Light base</span>
-                <span class="pill">Cool fade</span>
-              </div>
               <h3>Cosmic Blue</h3>
-              <p class="meta">High-vivid blue on pre-lightened hair · 10-12 washes</p>
+              <p class="meta">Vivid blue · Best on pre-lightened hair · 10-12 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Berry Plum"
               data-hair-base="dark"
               data-family="purple"
@@ -206,17 +139,13 @@
               data-fade="cool"
             >
               <span class="swatch swatch-plum"></span>
-              <div class="pill-row">
-                <span class="pill">Dark hair</span>
-                <span class="pill">Cool fade</span>
-              </div>
               <h3>Berry Plum</h3>
-              <p class="meta">Muted plum tone for brunette bases · 6-8 washes</p>
+              <p class="meta">Muted plum · Dark hair friendly · 6-8 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Mauve Dust"
               data-hair-base="light"
               data-family="pink"
@@ -224,17 +153,13 @@
               data-fade="cool"
             >
               <span class="swatch swatch-mauve"></span>
-              <div class="pill-row">
-                <span class="pill">Light base</span>
-                <span class="pill">Pastel</span>
-              </div>
               <h3>Mauve Dust</h3>
-              <p class="meta">Soft mauve with smoky finish · up to 10 washes</p>
+              <p class="meta">Dusty mauve · Best on level 8+ hair · 10 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Espresso Tint"
               data-hair-base="dark"
               data-family="brown"
@@ -242,17 +167,13 @@
               data-fade="warm"
             >
               <span class="swatch swatch-espresso"></span>
-              <div class="pill-row">
-                <span class="pill">Dark hair</span>
-                <span class="pill">No bleach</span>
-              </div>
               <h3>Espresso Tint</h3>
-              <p class="meta">Rich mocha refresh for natural dark hair · 6 washes</p>
+              <p class="meta">Rich brown refresh · No bleach route · 6 washes</p>
               <p class="price">₹549</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Rose Fizz"
               data-hair-base="light"
               data-family="pink"
@@ -260,17 +181,13 @@
               data-fade="warm"
             >
               <span class="swatch swatch-rose"></span>
-              <div class="pill-row">
-                <span class="pill">Light base</span>
-                <span class="pill">Warm fade</span>
-              </div>
               <h3>Rose Fizz</h3>
-              <p class="meta">Pastel rose with peach undertone · 8 washes</p>
+              <p class="meta">Pastel rose · Light base only · 8 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Mint Static"
               data-hair-base="light"
               data-family="green"
@@ -278,17 +195,13 @@
               data-fade="cool"
             >
               <span class="swatch swatch-mint"></span>
-              <div class="pill-row">
-                <span class="pill">Light base</span>
-                <span class="pill">Cool fade</span>
-              </div>
               <h3>Mint Static</h3>
-              <p class="meta">Mint green with icy finish · 8 washes</p>
+              <p class="meta">Mint green · Cool undertone fade · 8 washes</p>
               <p class="price">₹599</p>
             </article>
 
             <article
-              class="card reveal"
+              class="card"
               data-name="Velvet Wine"
               data-hair-base="dark"
               data-family="red"
@@ -296,12 +209,8 @@
               data-fade="warm"
             >
               <span class="swatch swatch-wine"></span>
-              <div class="pill-row">
-                <span class="pill">Dark hair</span>
-                <span class="pill">No bleach</span>
-              </div>
               <h3>Velvet Wine</h3>
-              <p class="meta">Burgundy wine wash on brown-black hair · 7 washes</p>
+              <p class="meta">Burgundy wash · Works on brown-black hair · 7 washes</p>
               <p class="price">₹599</p>
             </article>
           </div>
@@ -309,79 +218,24 @@
         </div>
       </section>
 
-      <section class="section prep" id="prep">
-        <div class="container prep-grid reveal">
+      <section class="prep" id="prep">
+        <div class="container prep-box">
           <div>
-            <p class="eyebrow">Prep recommendation</p>
-            <h2>Prep products stay out of the color grid</h2>
+            <p class="eyebrow">Prep Products</p>
+            <h2>Need pre-lightening?</h2>
             <p>
-              We only show bleach and developer in this separate block to reduce
-              confusion during color selection.
+              Keep bleach and developers out of the main color grid. Show them
+              here as contextual recommendations only when users pick light-base shades.
             </p>
           </div>
-          <aside class="prep-note" id="prep-note">
-            Current filters include shades that may require pre-lightening.
-          </aside>
-        </div>
-      </section>
-
-      <section class="section routine">
-        <div class="container">
-          <p class="eyebrow">3-step routine</p>
-          <h2 class="section-title reveal">Simple journey from browse to checkout</h2>
-          <div class="steps">
-            <article class="step reveal">
-              <span>01</span>
-              <h3>Pick your outcome</h3>
-              <p>Use quick filters first: no bleach, dark hair, warm/cool fade.</p>
-            </article>
-            <article class="step reveal">
-              <span>02</span>
-              <h3>Confirm hair base</h3>
-              <p>Each card clearly shows whether the shade needs pre-lightening.</p>
-            </article>
-            <article class="step reveal">
-              <span>03</span>
-              <h3>Add prep only if needed</h3>
-              <p>Prep products appear in a dedicated section, not mixed with colors.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section faq" id="faq">
-        <div class="container reveal">
-          <p class="eyebrow">FAQ</p>
-          <h2>Quick answers before you buy</h2>
-          <details>
-            <summary>Will all shades show on dark hair?</summary>
-            <p>
-              Not all. Use the "Dark hair friendly" chip to view shades designed
-              to be visible on deeper natural bases.
-            </p>
-          </details>
-          <details>
-            <summary>How long does semi-permanent color last?</summary>
-            <p>
-              Most shades in this collection last between 6 to 12 washes, depending
-              on hair porosity and wash routine.
-            </p>
-          </details>
-          <details>
-            <summary>Why separate bleach from color jars?</summary>
-            <p>
-              It keeps the main collection aligned to user intent and reduces the
-              chance of selecting the wrong product type during checkout.
-            </p>
-          </details>
+          <a href="#" class="btn btn-dark">View Bleach Packs</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-wrap">
-        <p>Birds of Paradyes landing page prototype</p>
-        <a href="#top">Back to top</a>
+      <div class="container">
+        <p>Prototype page for collection UX cleanup.</p>
       </div>
     </footer>
 

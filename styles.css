@@ -60,17 +60,8 @@ img {
 }
 
 .container {
-  width: min(1220px, 94vw);
+  width: min(1320px, 95vw);
   margin: 0 auto;
-}
-
-.announcement {
-  background: #101010;
-  color: #fff;
-  text-align: center;
-  padding: 0.55rem 1rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
 }
 
 .site-header {
@@ -82,39 +73,43 @@ img {
 }
 
 .header-row {
-  min-height: 72px;
+  min-height: 96px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo img {
-  height: 34px;
+  height: 46px;
   width: auto;
 }
 
 .icon-btn {
   background: transparent;
   border: 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #232323;
   cursor: pointer;
 }
 
+.category-nav-wrap {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
 .nav-links {
-  min-height: 44px;
+  min-height: 74px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.2rem;
-  border-top: 1px solid var(--line);
+  gap: 2.2rem;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #222;
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .collection-hero {
@@ -124,7 +119,7 @@ img {
 
 .collection-hero img {
   width: 100%;
-  height: min(54vw, 500px);
+  height: min(58vw, 640px);
   object-fit: cover;
 }
 
@@ -141,24 +136,25 @@ img {
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   margin: 0 0 0.45rem;
 }
 
 .hero-overlay h1 {
   margin: 0;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.8rem, 6vw, 5rem);
   font-weight: 600;
 }
 
 .hero-overlay p {
-  margin: 0.55rem 0 0;
+  margin: 0.8rem 0 0;
   max-width: 60ch;
+  font-size: 1.35rem;
 }
 
 .collection-content {
-  padding: 1.5rem 0 3rem;
+  padding: 2.2rem 0 4.5rem;
 }
 
 .toolbar {
@@ -172,44 +168,46 @@ img {
 #count {
   margin: 0;
   color: #222;
-  font-size: 0.95rem;
+  font-size: 1.35rem;
+  font-weight: 600;
 }
 
 .controls {
   display: flex;
-  gap: 0.45rem;
+  gap: 0.8rem;
   align-items: center;
 }
 
 input,
 select {
-  min-height: 40px;
+  min-height: 56px;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  border-radius: 10px;
   background: #fff;
   font: inherit;
   color: #222;
-  padding: 0.5rem 0.65rem;
+  padding: 0.75rem 0.95rem;
+  font-size: 1.05rem;
 }
 
 input {
-  min-width: 220px;
+  min-width: 340px;
 }
 
 .prep-note {
   border: 1px solid #ecd9b8;
   background: #fff5e4;
   color: #5b3d12;
-  border-radius: 8px;
-  padding: 0.72rem 0.8rem;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  font-size: 1.08rem;
+  margin-bottom: 1.3rem;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.85rem;
+  gap: 1.25rem;
 }
 
 .card {
@@ -235,39 +233,40 @@ input {
 
 .card-title {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 1.24rem;
   line-height: 1.35;
   font-weight: 600;
 }
 
 .card-type {
-  margin: 0.3rem 0 0;
-  font-size: 0.78rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.96rem;
   color: var(--muted);
 }
 
 .price-row {
-  margin: 0.52rem 0 0;
+  margin: 0.75rem 0 0;
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.55rem;
 }
 
 .price {
-  font-size: 0.98rem;
+  font-size: 1.22rem;
   font-weight: 700;
   color: var(--ink);
 }
 
 .compare-price {
-  font-size: 0.84rem;
+  font-size: 0.98rem;
   color: var(--sale);
   text-decoration: line-through;
 }
 
 .empty {
-  margin-top: 1.2rem;
+  margin-top: 1.5rem;
   color: var(--muted);
+  font-size: 1.05rem;
 }
 
 .is-hidden {
@@ -289,7 +288,9 @@ input {
   .nav-links {
     overflow-x: auto;
     justify-content: flex-start;
-    padding: 0 1rem;
+    padding: 0 1.2rem;
+    gap: 1.35rem;
+    min-height: 62px;
   }
 
   .controls {
@@ -299,6 +300,11 @@ input {
   input {
     min-width: 100%;
     width: 100%;
+  }
+
+  .nav-links a {
+    font-size: 1.24rem;
+    white-space: nowrap;
   }
 
   .product-grid {

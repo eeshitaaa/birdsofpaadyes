@@ -1,6 +1,5 @@
 (() => {
-  const ENDPOINT =
-    "https://www.birdsofparadyes.com/collections/semi-permanent-hair-color/products.json?limit=250";
+  const ENDPOINT = "https://shop.boroline.com/collections/all/products.json?limit=250";
 
   const grid = document.getElementById("grid");
   const cardTemplate = document.getElementById("card-template");
@@ -9,82 +8,50 @@
   const chips = Array.from(document.querySelectorAll(".chip"));
   const empty = document.getElementById("empty");
   const refreshLoader = document.getElementById("refresh-loader");
-  const loaderBottle = document.getElementById("loader-bottle");
+  const loaderProduct = document.getElementById("loader-product");
 
   let products = [];
   let activeChip = "all";
 
-  const bottleImages = [
-    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Jars_Bleach_Listing_2024_6ab3a533-eba2-4cbd-9386-619d45834673.jpg?v=1768276802",
-    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Jars_Bleach_Listing_2024.jpg?v=1746695231",
-    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Sapphire_Navy_24acb683-790f-4438-8dcc-73f2533f284b.jpg?v=1746695493",
-    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Superba_Aqua_202bf3c5-0f2a-4cb0-b439-05bbce2c4e2b.jpg?v=1746695162",
-    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/6_28c32df8-7543-4111-9530-41e7c1705020.jpg?v=1746691993"
-  ];
-  const lastBottleKey = "paradyes-loader-last-index";
-
   const fallbackProducts = [
     {
-      title: "Ruby Wine Semi-Permanent Hair Color",
-      handle: "ruby-wine-semi-permanent-hair-color",
-      images: [
-        { src: "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/2_1910163a-51c5-420e-a199-35fe6c50f144.jpg?v=1746692031" }
-      ],
-      product_type: "Semi-Permanent Hair Color",
-      variants: [{ price: "599.00", compare_at_price: null }]
+      title: "Boroline Antiseptic Cream",
+      handle: "boroline-antiseptic-ayurvedic-cream-40-gm-soften-smoothen-dry-chapped-lips-repair-cracked-heels-pack-of-1",
+      images: [{ src: "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_9.png?v=1746010295" }],
+      product_type: "Cream",
+      variants: [{ price: "80.00", compare_at_price: null }]
     },
     {
-      title: "Sapphire Navy Semi-Permanent Hair Color",
-      handle: "sapphire-navy-semi-permanent-hair-color",
-      images: [
-        { src: "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/Sapphire_Navy_24acb683-790f-4438-8dcc-73f2533f284b.jpg?v=1746695493" }
-      ],
-      product_type: "Semi-Permanent Hair Color",
-      variants: [{ price: "599.00", compare_at_price: null }]
+      title: "Bo Lips Nourishing Lip Balm",
+      handle: "boroline-bo-lips-vanilla-flavoured-lip-balm-with-almonds-oil",
+      images: [{ src: "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_10.png?v=1746010295" }],
+      product_type: "Lip Balm",
+      variants: [{ price: "75.00", compare_at_price: null }]
     },
     {
-      title: "Amethyst Plum Semi-Permanent Hair Color",
-      handle: "amethyst-plum-semi-permanent-hair-color",
-      images: [
-        { src: "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/100_21f07912-74fc-46d5-ae1d-ae9a4860110f.jpg?v=1746691774" }
-      ],
-      product_type: "Semi-Permanent Hair Color",
-      variants: [{ price: "599.00", compare_at_price: null }]
+      title: "Suthol Active Neem Liquid",
+      handle: "borolines-suthol-active-antiseptic-liquid-with-neem-turmeric-marigold-aloevera-stop-prickly-heat-rashes-summer-skin-itchiness-body-hygiene-liquid",
+      images: [{ src: "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_7.png?v=1746010295" }],
+      product_type: "Liquid",
+      variants: [{ price: "47.00", compare_at_price: null }]
     }
   ];
 
-  function setRandomBottle() {
-    if (!loaderBottle || bottleImages.length === 0) return;
+  const loaderImages = [
+    "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_9.png?v=1746010295",
+    "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_10.png?v=1746010295",
+    "https://shop.boroline.com/cdn/shop/files/Shopify_Product_Images_7.png?v=1746010295"
+  ];
 
-    let lastIndex = NaN;
-    try {
-      lastIndex = Number(localStorage.getItem(lastBottleKey));
-    } catch (error) {
-      lastIndex = NaN;
-    }
-
-    let randomIndex = Math.floor(Math.random() * bottleImages.length);
-    if (bottleImages.length > 1 && Number.isInteger(lastIndex) && randomIndex === lastIndex) {
-      randomIndex = (randomIndex + 1) % bottleImages.length;
-    }
-
-    loaderBottle.src = bottleImages[randomIndex];
-
-    try {
-      localStorage.setItem(lastBottleKey, String(randomIndex));
-    } catch (error) {
-      // Ignore storage errors.
-    }
+  function setLoaderImage() {
+    if (!loaderProduct) return;
+    const idx = Math.floor(Math.random() * loaderImages.length);
+    loaderProduct.src = loaderImages[idx];
   }
 
   function hideLoader() {
     if (!refreshLoader) return;
     refreshLoader.classList.add("is-hidden");
-  }
-
-  function normalizeTitle(title) {
-    if (!title) return "";
-    return title.replace(/Lovelang/gi, "Lover's Latte");
   }
 
   function formatMoney(value) {
@@ -93,21 +60,18 @@
   }
 
   function matchesChip(product) {
-    const text = `${product.title} ${product.product_type}`.toLowerCase();
     if (activeChip === "all") return true;
-    if (activeChip === "glossy") return text.includes("glossy");
-    if (activeChip === "timeless") return text.includes("timeless");
-    if (activeChip === "semi") return text.includes("semi") || text.includes("jar");
-    return true;
+    const type = (product.product_type || "").toLowerCase();
+    return type === activeChip.toLowerCase();
   }
 
   function getFilteredProducts() {
     const term = (search.value || "").trim().toLowerCase();
 
-    return products.filter((item) => {
-      const title = normalizeTitle(item.title).toLowerCase();
+    return products.filter((product) => {
+      const title = (product.title || "").toLowerCase();
       const searchMatch = !term || title.includes(term);
-      return searchMatch && matchesChip(item);
+      return searchMatch && matchesChip(product);
     });
   }
 
@@ -127,18 +91,19 @@
       const price = node.querySelector(".price");
       const compare = node.querySelector(".compare-price");
 
-      const productUrl = `https://www.birdsofparadyes.com/products/${product.handle}`;
+      const productUrl = `https://shop.boroline.com/products/${product.handle}`;
       const imageUrl = product.images?.[0]?.src || "";
+      const primaryVariant = product.variants?.[0] || {};
 
       link.href = productUrl;
       image.src = imageUrl;
-      image.alt = normalizeTitle(product.title);
-      title.textContent = normalizeTitle(product.title);
-      type.textContent = product.product_type || "Hair Color";
-      price.textContent = formatMoney(product.variants?.[0]?.price);
+      image.alt = product.title;
+      title.textContent = product.title;
+      type.textContent = product.product_type || "Boroline Product";
+      price.textContent = formatMoney(primaryVariant.price);
 
-      const compareValue = Number(product.variants?.[0]?.compare_at_price || 0);
-      const priceValue = Number(product.variants?.[0]?.price || 0);
+      const compareValue = Number(primaryVariant.compare_at_price || 0);
+      const priceValue = Number(primaryVariant.price || 0);
       if (compareValue > priceValue) {
         compare.textContent = formatMoney(compareValue);
         compare.classList.remove("is-hidden");
@@ -158,29 +123,24 @@
     try {
       const response = await Promise.race([
         fetch(ENDPOINT),
-        new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out")), 7000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out")), 7000))
       ]);
-      if (!response.ok) throw new Error("Failed to load products");
-      const payload = await response.json();
-      products = (payload.products || []).map((item) => ({
-        title: item.title,
-        handle: item.handle,
-        images: item.images,
-        product_type: item.product_type,
-        variants: item.variants || []
-      }));
+      if (!response.ok) throw new Error("Fetch failed");
 
-      if (products.length === 0) {
+      const payload = await response.json();
+      products = payload.products || [];
+
+      if (!products.length) {
         products = fallbackProducts;
       }
 
       renderProducts();
-      setTimeout(hideLoader, 650);
+      setTimeout(hideLoader, 600);
     } catch (error) {
       products = fallbackProducts;
       renderProducts();
       count.textContent = `${products.length} products (fallback)`;
-      setTimeout(hideLoader, 650);
+      setTimeout(hideLoader, 600);
     }
   }
 
@@ -197,7 +157,7 @@
     search.addEventListener("input", renderProducts);
   }
 
-  setRandomBottle();
+  setLoaderImage();
   setTimeout(hideLoader, 3500);
   loadProducts();
 })();

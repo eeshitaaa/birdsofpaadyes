@@ -9,8 +9,33 @@
   const typeFilter = document.getElementById("type-filter");
   const sort = document.getElementById("sort");
   const empty = document.getElementById("empty");
+  const refreshLoader = document.getElementById("refresh-loader");
+  const loaderBottle = document.getElementById("loader-bottle");
 
   let products = [];
+  const bottleImages = [
+    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/RR_Baddie.jpg?v=1772432523",
+    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/BP_Baddie.jpg?v=1772432542",
+    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/EB_Baddie.jpg?v=1772432505",
+    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/HB_Baddie.jpg?v=1772432128",
+    "https://cdn.shopify.com/s/files/1/0533/6006/6741/files/VB_Baddie.jpg?v=1772432436"
+  ];
+
+  function setRandomBottle() {
+    if (!loaderBottle) return;
+    const randomIndex = Math.floor(Math.random() * bottleImages.length);
+    loaderBottle.src = bottleImages[randomIndex];
+  }
+
+  function hideLoader() {
+    if (!refreshLoader) return;
+    refreshLoader.classList.add("is-hidden");
+  }
+
+  function normalizeTitle(title) {
+    if (!title) return "";
+    return title.replace(/Lovelang/gi, "Lover's Latte");
+  }
 
   function formatMoney(value) {
     const amount = Number(value || 0);
@@ -71,7 +96,7 @@
       link.href = productUrl;
       image.src = imageUrl;
       image.alt = product.title;
-      title.textContent = product.title;
+      title.textContent = normalizeTitle(product.title);
       type.textContent = product.product_type || "Semi-Permanent Hair Color";
       price.textContent = formatMoney(product.variants?.[0]?.price);
 
@@ -106,10 +131,12 @@
         variants: item.variants || []
       }));
       renderProducts();
+      setTimeout(hideLoader, 700);
     } catch (error) {
       count.textContent = "Unable to load products right now";
       empty.textContent = "Please refresh in a moment.";
       empty.classList.remove("is-hidden");
+      setTimeout(hideLoader, 700);
     }
   }
 
@@ -118,5 +145,6 @@
     control.addEventListener("change", renderProducts);
   });
 
+  setRandomBottle();
   loadProducts();
 })();
